@@ -39,7 +39,7 @@ class PostURLTests(TestCase):
             f'/group/{self.group.slug}/': 200,
             f'/profile/{self.user.username}/': 200,
             f'/posts/{self.post.id}/': 200,
-            f'/create/': 302,
+            '/create/': 302,
             f'/posts/{self.post.id}/edit/': 302,
             '/unexisting_page/': 404,
         }
