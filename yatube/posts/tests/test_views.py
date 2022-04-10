@@ -64,8 +64,9 @@ class PostPagesTests(TestCase):
     def test_group_list_show_correct_context(self):
         """Шаблон group_list сформирован с правильным контекстом."""
         response = (self.guest_client.
-                    get(reverse('posts:group_list', kwargs={
-                    'slug': f'{self.group.slug}'})))
+                    get(reverse('posts:group_list',
+                    kwargs={'slug': f'{self.group.slug}'}))
+        )
         self.assertEqual(response.context.get(
             'group').title, 'Тестовая группа')
         self.assertEqual(response.context.get(
@@ -76,15 +77,17 @@ class PostPagesTests(TestCase):
     def test_profile_show_correct_context(self):
         """Шаблон profile сформирован с правильным контекстом."""
         response = (self.authorized_client.
-                    get(reverse('posts:profile', kwargs={
-                    'username': f'{self.user.username}'})))
+                    get(reverse('posts:profile',
+                    kwargs={'username': f'{self.user.username}'}))
+        )
         self.assertEqual(response.context.get('user').username, 'HasNoName')
 
     def test_post_detail_show_correct_context(self):
         """Шаблон post_detail сформирован с правильным контекстом."""
         response = (self.guest_client.
-                    get(reverse('posts:post_detail', kwargs={
-                    'post_id': f'{self.post.id}'})))
+                    get(reverse('posts:post_detail',
+                    kwargs={'post_id': f'{self.post.id}'}))
+        )
         self.assertEqual(response.context.get('post').author.username, 'auth')
         self.assertEqual(response.context.get('post').text, 'Тестовый пост')
         self.assertEqual(response.context.get(
