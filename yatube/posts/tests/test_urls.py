@@ -4,6 +4,7 @@ from posts.models import Group, Post
 
 User = get_user_model()
 
+
 class PostURLTests(TestCase):
     @classmethod
     def setUpClass(cls):
@@ -19,7 +20,7 @@ class PostURLTests(TestCase):
             text='Тестовый пост',
             group=cls.group,
         )
-        
+
     def setUp(self):
         self.guest_client = Client()
         self.user = User.objects.create_user(username='HasNoName')
@@ -45,7 +46,7 @@ class PostURLTests(TestCase):
         for url, status in url_context.items():
             response = self.guest_client.get(url)
             with self.subTest(url=url):
-               self.assertEqual(response.status_code, status)
+                self.assertEqual(response.status_code, status)
 
     def test_create_page(self):
         """

@@ -1,4 +1,3 @@
-from tokenize import group
 from django.contrib.auth import get_user_model
 from django.test import Client, TestCase
 from django.urls import reverse
@@ -6,6 +5,7 @@ from posts.forms import PostForm
 from posts.models import Group, Post
 
 User = get_user_model()
+
 
 class PostFormTests(TestCase):
     @classmethod
@@ -16,22 +16,21 @@ class PostFormTests(TestCase):
             title='Тестовая группа',
             slug='test_slug',
             description='Тестовое описание',
-            )
-                
+        )
         cls.post = Post.objects.create(
             author=cls.user,
             text='Тестовый пост22',
             group=cls.group,
         )
         cls.form = PostForm()
-    
+
     def setUp(self):
-       self.guest_client = Client()
-       self.user = User.objects.create_user(username='Pirat')
-       self.authorized_client = Client()
-       self.authorized_client.force_login(self.user)
-       self.author_client = Client()
-       self.author_client.force_login(PostFormTests.user)
+        self.guest_client = Client()
+        self.user = User.objects.create_user(username='Pirat')
+        self.authorized_client = Client()
+        self.authorized_client.force_login(self.user)
+        self.author_client = Client()
+        self.author_client.force_login(PostFormTests.user)
 
     def test_create_post(self):
         """Валидная форма добавляет новую запись в posts."""
@@ -45,7 +44,7 @@ class PostFormTests(TestCase):
             data=form_data,
             follow=True
         )
-        self.assertEqual(Post.objects.count(), posts_count+1)
+        self.assertEqual(Post.objects.count(), posts_count + 1)
         self.assertTrue(
             Post.objects.filter(
                 text='Тестовый текст',
@@ -64,6 +63,6 @@ class PostFormTests(TestCase):
             reverse('posts:post_edit', args=[self.post.pk]),
             data=form_data,
             follow=True
-            )
+        )
         post = response.context['post']
         self.assertEqual(post.text, 'Новый текст')
