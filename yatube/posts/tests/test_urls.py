@@ -1,11 +1,14 @@
 from django.contrib.auth import get_user_model
 from django.test import Client, TestCase
+from django.urls import reverse
+
 from posts.models import Group, Post
 
 User = get_user_model()
 
 
 class PostURLTests(TestCase):
+    
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
@@ -35,12 +38,16 @@ class PostURLTests(TestCase):
         и запроса несуществующей страницы.
         """
         url_context = {
-            '/': 200,
-            f'/group/{self.group.slug}/': 200,
-            f'/profile/{self.user.username}/': 200,
-            f'/posts/{self.post.id}/': 200,
-            '/create/': 302,
-            f'/posts/{self.post.id}/edit/': 302,
+            reverse('posts:index'): 200,
+            reverse('posts:group_list',
+                kwargs={'slug': f'{self.group.slug}'}): 200,
+            reverse('posts:profile',
+                kwargs={'username': f'{self.user.username}'}): 200,
+            reverse('posts:post_detail', kwargs={
+                'post_id': f'{self.post.id}'}): 200,
+            reverse('posts:post_create'): 302,
+            reverse('posts:post_edit', kwargs={
+                'post_id': f'{self.post.id}'}): 302,
             '/unexisting_page/': 404,
         }
         for url, status in url_context.items():
@@ -64,12 +71,16 @@ class PostURLTests(TestCase):
     def test_url_uses_correct_template(self):
         """Проверка используемых шаблонов."""
         template_url_names = {
-            '/': 'posts/index.html',
-            f'/group/{self.group.slug}/': 'posts/group_list.html',
-            f'/profile/{self.user.username}/': 'posts/profile.html',
-            f'/posts/{self.post.id}/': 'posts/post_detail.html',
-            '/create/': 'posts/create_post.html',
-            f'/posts/{self.post.id}/edit/': 'posts/create_post.html',
+            reverse('posts:index'): 'posts/index.html',
+            reverse('posts:group_list', kwargs={
+                'slug': f'{self.group.slug}'}): 'posts/group_list.html',
+            reverse('posts:profile', kwargs={
+                'username': f'{self.user.username}'}): 'posts/profile.html',
+            reverse('posts:post_detail', kwargs={
+                'post_id': f'{self.post.id}'}): 'posts/post_detail.html',
+            reverse('posts:post_create'): 'posts/create_post.html',
+            reverse('posts:post_edit', kwargs={
+                'post_id': f'{self.post.id}'}): 'posts/create_post.html',
         }
         for address, template in template_url_names.items():
             with self.subTest(address=address):
