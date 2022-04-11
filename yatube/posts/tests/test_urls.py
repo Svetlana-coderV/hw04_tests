@@ -8,7 +8,7 @@ User = get_user_model()
 
 
 class PostURLTests(TestCase):
-    
+
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
@@ -39,10 +39,10 @@ class PostURLTests(TestCase):
         """
         url_context = {
             reverse('posts:index'): 200,
-            reverse('posts:group_list',
-                kwargs={'slug': f'{self.group.slug}'}): 200,
-            reverse('posts:profile',
-                kwargs={'username': f'{self.user.username}'}): 200,
+            reverse('posts:group_list', kwargs={
+                'slug': f'{self.group.slug}'}): 200,
+            reverse('posts:profile', kwargs={
+                'username': f'{self.user.username}'}): 200,
             reverse('posts:post_detail', kwargs={
                 'post_id': f'{self.post.id}'}): 200,
             reverse('posts:post_create'): 302,

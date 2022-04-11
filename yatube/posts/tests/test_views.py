@@ -9,7 +9,7 @@ User = get_user_model()
 
 
 class PostPagesTests(TestCase):
-    
+
     @classmethod
     def setUpClass(cls):
         super().setUpClass()

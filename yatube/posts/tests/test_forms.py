@@ -2,14 +2,13 @@ from django.contrib.auth import get_user_model
 from django.test import Client, TestCase
 from django.urls import reverse
 
-from posts.forms import PostForm
 from posts.models import Group, Post
 
 User = get_user_model()
 
 
 class PostFormTests(TestCase):
-    
+
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
@@ -24,7 +23,7 @@ class PostFormTests(TestCase):
             text='Тестовый пост22',
             group=cls.group,
         )
-        
+    
     def setUp(self):
         self.guest_client = Client()
         self.user = User.objects.create_user(username='Pirat')
