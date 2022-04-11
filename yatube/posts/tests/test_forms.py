@@ -23,7 +23,7 @@ class PostFormTests(TestCase):
             text='Тестовый пост22',
             group=cls.group,
         )
-    
+
     def setUp(self):
         self.guest_client = Client()
         self.user = User.objects.create_user(username='Pirat')
