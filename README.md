@@ -1,3 +1,13 @@
 # hw04_tests
+Покрытие тестами приложения для публикации произведений (блогов)
 
-[![CI](https://github.com/yandex-praktikum/hw04_tests/actions/workflows/python-app.yml/badge.svg?branch=master)](https://github.com/yandex-praktikum/hw04_tests/actions/workflows/python-app.yml)
+## Особенности:
+- Проверка доступности страниц приложения в соответствии с правами
+- Проверка использования нужных html-шаблонов
+- Проверка корректности создания и изменения записи БД
+- Проверка отображения записи на страницах приложения
+
+## Технологии:
+- Python
+- Django
+- Unittest
